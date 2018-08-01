@@ -1,8 +1,6 @@
-<p> Welcome, </p>
+<p> Welcome, tweeting ! </p>
 <p><li>Name : <%=@user.username%></a> </li>
 <% @user.tweets.each do |tweet| %>
                <%= tweet.content %>
                <% end %></li>
-
-
-<p><a href="/logout">Log Out</a></p>
+<form action="/login"> <input type="submit" name="submit" value="Log Out"> Log Out</a></form>
