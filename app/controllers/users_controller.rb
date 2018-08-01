@@ -5,7 +5,7 @@ class UsersController < ApplicationController
     end
 
     post "/signup" do
-      binding.pry
+    #binding.pry
       if !!session[:user_id]
         redirect '/tweets'
       end
@@ -27,7 +27,9 @@ class UsersController < ApplicationController
     end
 
     get '/account' do
+      #binding.pry
       @user = User.find(session[:user_id])
+
       erb :'users/show'
     end
 
@@ -37,6 +39,10 @@ class UsersController < ApplicationController
     end
 
     post "/login" do
+
+      if !!session[:user_id] == true
+        redirect "/tweets"
+      end
       user = User.find_by(:username => params[:username])
       if user && user.authenticate(params[:password])
         session[:user_id] = user.id
