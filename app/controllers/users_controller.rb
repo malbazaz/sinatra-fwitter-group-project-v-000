@@ -5,17 +5,24 @@ class UsersController < ApplicationController
     end
 
     post "/signup" do
-      user = User.new(:username => params[:username], :email => params[:email], :password => params[:password])
-      if user.username == ""
+      binding.pry
+      if !!session[:user_id]
+        redirect '/tweets'
+      end
+      if params[:username] == ""
         redirect "/signup"
       end
-      if user.email == ""
+      if params[:email] == ""
         redirect "/signup"
       end
-      if user.save
-  	     redirect "/login"
-  	  else
+      if params[:password] == ""
+        redirect "/signup"
+      end
+      user = User.create(:username => params[:username], :email => params[:email], :password => params[:password])
+      if user
   	     redirect "/tweets"
+      else
+        redirect "/login"
   	  end
     end
 
