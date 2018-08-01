@@ -60,8 +60,14 @@ class UsersController < ApplicationController
 
     get "/logout" do
       session.clear
-      redirect "/"
+      redirect "/login"
     end
+
+    post "/logout" do
+      session.clear
+      redirect "/login"
+    end
+
 
     helpers do
       def logged_in?
