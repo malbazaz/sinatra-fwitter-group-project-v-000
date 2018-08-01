@@ -39,12 +39,14 @@ class UsersController < ApplicationController
 
 
     get "/login" do
+      if !!session[:user_id]
+        redirect "/tweets"
+      end
       erb :'users/login'
     end
 
     post "/login" do
-
-      if !!session[:user_id] == true
+      if !!session[:user_id]
         redirect "/tweets"
       end
       user = User.find_by(:username => params[:username])
