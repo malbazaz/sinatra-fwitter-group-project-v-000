@@ -58,6 +58,15 @@ class UsersController < ApplicationController
       end
     end
 
+    get '/users/:slug' do
+        @user = find_by_slug(params[:slug])
+      if !!session[:user_id]
+          redirect to "/users/#{user.slug}"
+      else
+        redirect to '/login'
+      end
+  end
+
     get "/logout" do
       session.clear
       redirect "/login"
