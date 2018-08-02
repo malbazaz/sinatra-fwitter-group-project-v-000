@@ -57,4 +57,14 @@ post '/tweets/:id' do
 erb :'tweets/show_tweet'
 end
 
+delete '/tweets/:id/delete' do
+  if !!session[:user_id]
+    redirect '/login'
+  else
+    @tweet = Tweet.find(params[:id])
+    @tweet.delete
+    erb :"/tweets"
+  end
+end
+
 end
