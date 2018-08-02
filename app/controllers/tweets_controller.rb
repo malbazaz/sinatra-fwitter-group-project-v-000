@@ -21,7 +21,7 @@ get '/tweets/new' do
 end
 
 post '/tweets' do
-  #binding.pry
+#  binding.pry
   if params[:tweet][:content] == ""
     redirect to '/tweets/new'
   else
@@ -38,11 +38,17 @@ erb :'tweets/show_tweet'
 end
 
 get '/tweets/:id/edit' do
-
+  if !!session[:user_id]
+    @tweet = Tweet.find_by_id(params[:id])
+  erb :'tweets/edit_tweet'
+  else
+  redirect '/login'
+  end
 end
 
 post '/tweets/:id' do
-
+@tweet = Tweet.find_by_id(params[:id])
+erb :'tweets/show_tweet'
 end
 
 end
