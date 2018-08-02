@@ -48,7 +48,12 @@ get '/tweets/:id/edit' do
 end
 
 post '/tweets/:id' do
+  if params[:tweet][:content] == ""
+    redirect "/tweets/#{params[:id]}/edit"
+  end
 @tweet = Tweet.find_by_id(params[:id])
+@tweet.content = params[:tweet][:content]
+@tweet.save
 erb :'tweets/show_tweet'
 end
 
