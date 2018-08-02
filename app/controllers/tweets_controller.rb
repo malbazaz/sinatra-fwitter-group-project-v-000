@@ -59,15 +59,18 @@ end
 
 delete '/tweets/:id/delete' do
     #binding.pry
-    if session[:user_id] == params[:id]
-    if !!session[:user_id]
-      redirect '/login'
-    else
-      @tweet = Tweet.find(params[:id])
+    @tweet = Tweet.find_by_id(params[:id])
+    if !session[:user_id]
+      redirect to "/login"
+    end
+    if @tweet.user_id == session[:user_id]
+    #binding.pry
       @tweet.delete
-      erb :"/tweets"
+    redirect to "/tweets"
+    else
+      redirect to "/login"
     end
   end
-end
+
 
 end
