@@ -21,11 +21,13 @@ get '/tweets/new' do
 end
 
 post '/tweets' do
-  if !!session[:user_id]
-  @tweet = Tweet.create(content: params[:content])
+  #binding.pry
+  if params[:tweet][:content] == ""
+    redirect to '/tweets/new'
+  else
+  @tweet = Tweet.create(content: params[:tweet][:content])
+  @tweet.user_id = User.find_by_id(session[:user_id])
    redirect to "/tweets/#{@tweet.id}"
- else
-   redirect '/login'
   end
 
 end
