@@ -21,12 +21,13 @@ get '/tweets/new' do
 end
 
 post '/tweets' do
-#  binding.pry
+ #binding.pry
   if params[:tweet][:content] == ""
     redirect to '/tweets/new'
   else
   @tweet = Tweet.create(content: params[:tweet][:content])
-  @tweet.user_id = User.find_by_id(session[:user_id])
+  @tweet.user_id = session[:user_id]
+  @tweet.save
    redirect to "/tweets/#{@tweet.id}"
   end
 
