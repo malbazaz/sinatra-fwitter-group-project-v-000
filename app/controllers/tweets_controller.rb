@@ -47,7 +47,7 @@ get '/tweets/:id/edit' do
   end
 end
 
-post '/tweets/:id' do
+patch '/tweets/:id' do
   if params[:tweet][:content] == ""
     redirect "/tweets/#{params[:id]}/edit"
   end
@@ -58,12 +58,15 @@ erb :'tweets/show_tweet'
 end
 
 delete '/tweets/:id/delete' do
-  if !!session[:user_id]
-    redirect '/login'
-  else
-    @tweet = Tweet.find(params[:id])
-    @tweet.delete
-    erb :"/tweets"
+    #binding.pry
+    if session[:user_id] == params[:id]
+    if !!session[:user_id]
+      redirect '/login'
+    else
+      @tweet = Tweet.find(params[:id])
+      @tweet.delete
+      erb :"/tweets"
+    end
   end
 end
 
